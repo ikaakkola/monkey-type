@@ -34,18 +34,32 @@ function setText() {
     monkeyType.value = "";
 }
 
+const monkeyConfetti1 = confetti.shapeFromText({ text: '🙈' }, 3);
+const monkeyConfetti2 = confetti.shapeFromText({ text: '🐒' }, 4);
+let validating = undefined;
 function validateResult(element) {
+    if (validating !== undefined) {
+        return;
+    }
     const entered = element.value;
     if (entered === monkeySee.value) {
         monkeySee.classList.add("valid");
         correctAnswers++;
+        if (correctAnswers === 1 || correctAnswers % 5 === 0) {
+            if (correctAnswers % 10 === 0) {
+                const text = confetti.shapeFromText({ text: correctAnswers + '' }, 4);
+                confetti({ shapes: [monkeyConfetti1, monkeyConfetti2, text], scalar: correctAnswers % 2 + 2 });
+            }
+            confetti({ shapes: [monkeyConfetti1, monkeyConfetti2], scalar: correctAnswers % 2 + 2 });
+        }
         monkeyCount.innerText = "" + correctAnswers;
         element.disabled = true;
-        setTimeout(() => {
+        validating = setTimeout(() => {
             element.disabled = false;
             setText();
             element.value = "";
             monkeySee.classList.remove("valid");
+            validating = undefined;
         }, 400);
     }
 }
@@ -58,6 +72,7 @@ function changeLetterCount(change) {
     if (characterCount > 6) {
         characterCount = 6;
     }
+    monkeyType.maxLength = "" + characterCount;
     setText();
 }
 

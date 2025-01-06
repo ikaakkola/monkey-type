@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="css/skeleton/skeleton.css">
     <link rel="stylesheet" href="css/monkeytype.css">
 
+    <script src="js/canvas-confetti/confetti.browser.min.js"></script>
     <script src="js/monkeytype.js"></script>
 
     <title>MonkeyType, OOK?</title>
@@ -30,15 +31,15 @@
             <div class="row center">
                 <div class="full column box">
                     <h3>Monkey See?</h3>
-                    <input id="monkey-see" type="text" class="monkey-text monkey-text-uc monkey-see" value="" readonly="readonly"
-                        onfocus="this.blur()" />
+                    <input id="monkey-see" type="text" class="monkey-text monkey-text-uc monkey-see" value=""
+                        readonly="readonly" onfocus="this.blur()" />
                 </div>
             </div>
             <div class="row center">
                 <div class="full column box">
                     <h3>Monkey Type!</h3>
-                    <input id="monkey-type" type="text" class="monkey-text monkey-text-uc"
-                        onkeyup="validateResult(this)" />
+                    <input id="monkey-type" type="text" class="monkey-text monkey-text-uc" maxlength="1"
+                        onkeypress="validateResult(this)" onkeyup="validateResult(this)" />
                 </div>
             </div>
             <div class="row">
