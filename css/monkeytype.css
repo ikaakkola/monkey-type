@@ -1,0 +1,63 @@
+.monkeytype {
+    padding: 1rem;
+    max-width: 100% !important;
+}
+
+.center {
+    text-align: center;
+}
+
+.right {
+    text-align: right;
+}
+
+.monkeytype .box {
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    border-radius: 0.2rem;
+    background-color: #eee;
+}
+
+.monkey-text {
+    font-size: 12rem;
+    line-height: 1rem;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    width: 98%;
+    height: auto !important;
+    text-align: center;
+}
+
+.monkey-see {
+    color: rgb(199, 74, 107);
+}
+
+.valid {
+    color: rgb(33, 157, 5);
+}
+
+.monkey-text-uc {
+    text-transform: uppercase;
+}
+
+.monkey-text-lc {
+    text-transform: lowercase;
+}
+
+.monkeytype .row {
+    margin-bottom: 0.5rem;
+}
+
+.monkeytype .bx {
+    font-size: 3rem;
+}
+
+.monkeytype .result-count {
+    font-size: 3rem;
+    line-height: 1;
+}
+
+.link {
+    color: rgb(72, 102, 209);
+    cursor: pointer;
+}
