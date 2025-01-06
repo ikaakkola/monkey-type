@@ -41,8 +41,8 @@ function validateResult(element) {
     if (validating !== undefined) {
         return;
     }
-    const entered = element.value;
-    if (entered === monkeySee.value) {
+    const entered = element.value.toLowerCase();
+    if (entered === monkeySee.value.toLowerCase()) {
         monkeySee.classList.add("valid");
         correctAnswers++;
         if (correctAnswers === 1 || correctAnswers % 5 === 0) {
@@ -86,4 +86,10 @@ function onPageLoaded() {
         monkeyType.focus();
     });
     document.addEventListener("keydown", (event) => { monkeyType.focus(); });
+    monkeyType.addEventListener("keyup", (event) => {
+        validateResult(monkeyType);
+    });
+    monkeyType.addEventListener("input", (event) => {
+        validateResult(monkeyType);
+    });
 }
