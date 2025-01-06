@@ -3,8 +3,7 @@ const characterSets = {
     "fi": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "å", "ä", "ö"]
 }
 
-const lang = "fi"; // TODO: change
-
+let lang = "en";
 let characterCount = 1;
 let correctAnswers = 0;
 let monkeySee, monkeyType, monkeyLike, monkeyCount = null;
@@ -77,9 +76,15 @@ function changeLetterCount(change) {
 }
 
 function onPageLoaded() {
+    const language = (navigator.language || navigator.userLanguage).toLowerCase();
+    lang = Object.keys(characterSets).find((characterSet) => {
+        return language.startsWith(characterSet) ? true : false;
+    }) || "en";
+
     monkeySee = document.getElementById("monkey-see");
     monkeyType = document.getElementById("monkey-type");
     monkeyCount = document.getElementById("monkey-count");
+    monkeyCount.innerText = lang;
     setText()
 
     document.addEventListener("mouseup", (event) => {
