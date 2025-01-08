@@ -23,14 +23,22 @@ function changeCase(elementIds) {
     });
 }
 
+let previous = undefined;
 function setText() {
     const characters = characterSets[lang] || characterSets["en"];
-    const result = [];
-    for (let i = 0; i < characterCount; i++) {
-        result[i] = characters[Math.floor(Math.random() * characters.length)];
+    while (true) {
+        const result = [];
+        for (let i = 0; i < characterCount; i++) {
+            result[i] = characters[Math.floor(Math.random() * characters.length)];
+        }
+        const text = result.join("");
+        if (!previous || previous !== text) {
+            previous = text;
+            monkeySee.value = result.join("");
+            monkeyType.value = "";
+            return;
+        }
     }
-    monkeySee.value = result.join("");
-    monkeyType.value = "";
 }
 
 const monkeyConfetti1 = confetti.shapeFromText({ text: '🙈' }, 3);
@@ -44,18 +52,25 @@ function validateResult(element) {
     if (entered === monkeySee.value.toLowerCase()) {
         monkeySee.classList.add("valid");
         correctAnswers++;
-        if (correctAnswers === 1 || correctAnswers % 5 === 0) {
-            if (correctAnswers % 10 === 0) {
-                const text = confetti.shapeFromText({ text: correctAnswers + '' }, 4);
-                confetti({ shapes: [monkeyConfetti1, monkeyConfetti2, text], scalar: correctAnswers % 2 + 2 });
+
+        const levelUp = correctAnswers % 20 === 0;
+        if (levelUp || correctAnswers === 1 || correctAnswers % 5 === 0) {
+            if (levelUp) {
+                const text = confetti.shapeFromText({ text: "LEVEL UP!" }, 4);
+                confetti({ shapes: [monkeyConfetti1, monkeyConfetti2, text], scalar: correctAnswers % 2 + 3, ticks: 400 });
+            } else {
+                confetti({ shapes: [monkeyConfetti1, monkeyConfetti2], scalar: correctAnswers % 2 + 2 });
             }
-            confetti({ shapes: [monkeyConfetti1, monkeyConfetti2], scalar: correctAnswers % 2 + 2 });
         }
         monkeyCount.innerText = "" + correctAnswers;
         element.disabled = true;
         validating = setTimeout(() => {
             element.disabled = false;
-            setText();
+            if (levelUp) {
+                changeLetterCount(1);
+            } else {
+                setText();
+            }
             element.value = "";
             monkeySee.classList.remove("valid");
             validating = undefined;
@@ -68,8 +83,8 @@ function changeLetterCount(change) {
     if (characterCount < 1) {
         characterCount = 1;
     }
-    if (characterCount > 6) {
-        characterCount = 6;
+    if (characterCount > 8) {
+        characterCount = 8;
     }
     monkeyType.maxLength = "" + characterCount;
     setText();
@@ -84,7 +99,6 @@ function onPageLoaded() {
     monkeySee = document.getElementById("monkey-see");
     monkeyType = document.getElementById("monkey-type");
     monkeyCount = document.getElementById("monkey-count");
-    monkeyCount.innerText = lang;
     setText()
 
     document.addEventListener("mouseup", (event) => {
